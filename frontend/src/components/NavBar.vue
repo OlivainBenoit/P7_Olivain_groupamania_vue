@@ -1,0 +1,96 @@
+<template>
+  <nav>
+    <div id="linkLeft">
+      <div class="linkLeft">
+        <router-link to="/" v-if="this.user.token !== null">Accueil</router-link>
+      </div>
+    </div>
+    <img id="logoHeader" src="../../public/Images/icon-left-font-monochrome-white.png" />
+    <div id="linkRight">
+      <div class="linkRight">
+        <router-link to="/login" v-if="this.user.token === null">Connexion</router-link>
+      </div>
+      <div class="linkRight">
+        <router-link to="/login" v-if="this.user.token !== null" @click.prevent="disconnect">Deconnexion
+        </router-link>
+      </div>
+      <div class=" linkRight">
+        <router-link to="/signin" v-if="this.user.token === null">Inscription</router-link>
+      </div>
+    </div>
+  </nav>
+</template>
+
+<script>
+import router from "../router/index.js";
+
+export default {
+  name: "NavBar",
+  data() {
+    return {}
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    }
+  },
+  methods: {
+    disconnect() {
+      const user = {
+        userId: null,
+        email: null,
+        token: null,
+        isAdmin: null
+      }
+      this.$store.commit("setUser", user);
+      router.push({ name: 'login'})
+    }
+  }
+}
+
+</script>
+
+<style scoped lang="scss">
+
+
+
+nav {
+  padding: 20px 50px 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4E5166;
+
+  #logoHeader {
+    height: 40px;
+    width: auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -115px;
+  }
+
+  a {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+
+    &.router-link-exact-active {
+      color: #FD2D01;
+    }
+  }
+}
+
+#linkRight,
+#linkLeft {
+  display: flex;
+}
+
+.linkRight {
+  margin-left: 30px;
+}
+
+.linkLeft {
+  margin-right: 30px;
+}
+
+</style>

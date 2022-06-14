@@ -1,0 +1,219 @@
+<template>
+  <div class="col">
+    <div class="card h-100">
+      <a @click="getOneArticle">
+        <img
+          v-if="post.imageUrl !== undefined"
+          class="card-img-top"
+          :src="post.imageUrl"
+        />
+        <img
+          v-else
+          class="card-img-top"
+          src="@/../public/Images/No_image_available.jpg"
+        />
+      </a>
+      <div class="card-body">
+        <a @click="getOneArticle">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.description }}</p>
+        </a>
+        <div class="card-btn-group">
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              @click="deletePost"
+              v-if="
+                this.post.userId === this.user.userId ||
+                this.user.isAdmin === true
+              "
+            >
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary"
+              @click="modifyPost"
+              v-if="
+                this.post.userId === this.user.userId ||
+                this.user.isAdmin === true
+              "
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </div>
+          <div class="btn-like">
+            <a @click="sendLike">
+              <i
+                v-if="onLike === false"
+                class="fa-solid fa-thumbs-up iconLike"
+              ></i>
+              <i v-else class="fa-solid fa-thumbs-up iconOnLike"></i>
+            </a>
+            <div class="countLike">
+              {{ likes }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Posté par {{ post.username }}</small>
+        <small class="text-muted">{{ post.date }}</small>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import router from "../router/index.js";
+
+export default {
+  name: "CardArticle",
+  data() {
+    return {
+      likes: 0,
+      onLike: false,
+    };
+  },
+  props: {
+    post: {
+      type: Object,
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
+  methods: {
+    deletePost() {
+      var confirmPopUp = confirm(
+        `Voulez-vous supprimer le post ${this.post.title} ?`
+      );
+
+      if (confirmPopUp) {
+        axios
+          .delete("http://localhost:3000/api/articles/" + this.post._id, {
+            headers: {
+              Authorization: "Bearer " + this.user.token,
+            },
+            data: {
+              postId: this.post._id,
+              isAdmin: this.user.isAdmin,
+            },
+          })
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((error) => console.log(error));
+      }
+    },
+    modifyPost() {
+      router.push({
+        name: "editarticle",
+        params: { articleId: this.post._id },
+      });
+    },
+    sendLike() {
+      axios
+        .post(
+          "http://localhost:3000/api/articles/" + this.post._id + "/like",
+          {
+            userId: this.user.userId,
+          },
+          {
+            headers: {
+              Authorization: "Bearer " + this.user.token,
+            },
+          }
+        )
+        .then((response) => {
+          this.likes = response.data.article.likes;
+          const userInArray = response.data.article.usersLiked.includes(
+            this.user.userId
+          );
+          if (userInArray) {
+            this.onLike = true;
+          } else {
+            this.onLike = false;
+          }
+        })
+        .catch((error) => console.log(error));
+    },
+    getOneArticle() {
+      router.push({
+        name: "getonearticle",
+        params: { articleId: this.post._id },
+      });
+    },
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/api/articles/" + this.post._id + "/like", {
+        headers: {
+          Authorization: "Bearer " + this.user.token,
+        },
+      })
+      .then((response) => {
+        this.likes = response.data.likes;
+        const userInArray = response.data.usersLiked.includes(this.user.userId);
+        if (userInArray) {
+          this.onLike = true;
+        }
+      })
+      .catch((error) => console.log(error));
+  },
+};
+</script>
+
+<style scoped lang="scss">
+.col {
+  // flex: 0 0 30%;
+  margin: 10px 0;
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-like {
+  display: flex;
+  align-items: center;
+}
+
+.countLike {
+  display: flex;
+  align-items: center;
+  margin: 0 5px;
+}
+
+.iconLike {
+  font-size: 20px;
+  &:hover {
+    color: green;
+  }
+}
+.iconOnLike {
+  color: green;
+  font-size: 20px;
+}
+
+.btn-sm:hover {
+  background-color: #fd2d01;
+}
+</style>
+
+// JS => camelCase // HTLM => Les deux // CSS => snake-case
