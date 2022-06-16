@@ -170,9 +170,16 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+@import "@/../public/variable.scss";
 .col {
-  // flex: 0 0 30%;
   margin: 10px 0;
+}
+
+.card{
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .card-img-top {
@@ -213,7 +220,7 @@ export default {
 }
 
 .btn-sm:hover {
-  background-color: #fd2d01;
+  background-color: $color-primary;
 }
 </style>
 

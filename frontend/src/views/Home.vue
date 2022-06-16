@@ -13,6 +13,7 @@ import axios from "axios";
 import AddArticle from "@/components/AddArticle.vue"
 
 
+
 export default {
   name: 'HomeArticle',
   data () {
@@ -55,12 +56,16 @@ export default {
 
 <style scoped lang="scss">
 
+@import "@/../public/variable.scss";
 
 .row {
   margin: 0 10px;
   justify-content: center;
   flex-wrap: wrap-reverse;
   flex-direction: row-reverse;
+  @include mobile {
+    flex-direction: column-reverse;
+  }
 }
 
 h2 {

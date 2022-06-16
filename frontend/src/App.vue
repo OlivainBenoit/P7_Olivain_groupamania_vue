@@ -14,6 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "@/../public/variable.scss";
 
 #app {
   font-family: Lato, Helvetica, Arial, sans-serif;
@@ -22,6 +23,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   min-height: 950px;
-  background-color: #FFD7D7;
+  background-color: $color-secondary;
 }
 </style>

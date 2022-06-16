@@ -108,6 +108,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
+
+
+@import "@/../public/variable.scss";
 .cardForm {
   background-color: white;
   width: 50%;
@@ -123,13 +128,13 @@ export default {
 }
 
 .btn-primary {
-  background-color: #fd2d01;
+  background-color: $color-primary;
   margin-top: 20px;
   &:hover {
-    background-color: #4e5166;
+    background-color: $color-tertiary;
   }
   &:focus {
-    background-color: #fd2d01;
+    background-color: $color-primary;
   }
   &-top {
     margin: 20px 0;

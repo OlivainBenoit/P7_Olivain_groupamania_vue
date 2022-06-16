@@ -1,21 +1,23 @@
 <template>
   <nav>
-    <div id="linkLeft">
-      <div class="linkLeft">
-        <router-link to="/" v-if="this.user.token !== null">Accueil</router-link>
-      </div>
-    </div>
     <img id="logoHeader" src="../../public/Images/icon-left-font-monochrome-white.png" />
-    <div id="linkRight">
-      <div class="linkRight">
-        <router-link to="/login" v-if="this.user.token === null">Connexion</router-link>
+    <div class="link">
+      <div id="linkLeft">
+        <div class="linkLeft">
+          <router-link to="/" v-if="this.user.token !== null">Accueil</router-link>
+        </div>
+        <div class="linkRight">
+          <router-link to="/login" v-if="this.user.token === null">Connexion</router-link>
+        </div>
       </div>
-      <div class="linkRight">
-        <router-link to="/login" v-if="this.user.token !== null" @click.prevent="disconnect">Deconnexion
-        </router-link>
-      </div>
-      <div class=" linkRight">
-        <router-link to="/signin" v-if="this.user.token === null">Inscription</router-link>
+      <div id="linkRight">
+        <div class="linkRight">
+          <router-link to="/login" v-if="this.user.token !== null" @click.prevent="disconnect">Deconnexion
+          </router-link>
+        </div>
+        <div class=" linkRight">
+          <router-link to="/signin" v-if="this.user.token === null">Inscription</router-link>
+        </div>
       </div>
     </div>
   </nav>
@@ -53,20 +55,31 @@ export default {
 <style scoped lang="scss">
 
 
+@import "@/../public/variable.scss";
 
 nav {
-  padding: 20px 50px 20px 50px;
+  padding: 20px 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #4E5166;
-
+  background: $color-tertiary;
+  @include mobile {
+    flex-direction: column;
+    height: 80px;
+    width: 100%;
+    padding: 10px 20px;
+  }
   #logoHeader {
     height: 40px;
     width: auto;
     position: absolute;
     left: 50%;
     margin-left: -115px;
+    @include mobile {
+      height: 30px;
+      position: static;
+      margin-left: 0px;
+    }
   }
 
   a {
@@ -75,9 +88,14 @@ nav {
     color: white;
 
     &.router-link-exact-active {
-      color: #FD2D01;
+      color: $color-primary;
     }
   }
+}
+
+#linkRight{
+  display:flex;
+  justify-content: end;
 }
 
 #linkRight,
@@ -87,10 +105,22 @@ nav {
 
 .linkRight {
   margin-left: 30px;
+  @include mobile {
+      margin-left: 0px;
+    }
 }
 
 .linkLeft {
   margin-right: 30px;
+  @include mobile {
+    margin-right: 0px;
+  }
+}
+
+.link{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 </style>

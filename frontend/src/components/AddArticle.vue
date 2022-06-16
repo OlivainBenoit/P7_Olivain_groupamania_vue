@@ -149,6 +149,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
+
+
+@import "@/../public/variable.scss";
 .modal-footer {
   display: flex;
   justify-content: center;
@@ -160,43 +165,15 @@ export default {
 }
 
 .btn-primary {
-  background-color: #fd2d01;
+  background-color: $color-primary;
   &:hover {
-    background-color: #4e5166;
+    background-color: $color-tertiary;
   }
   &:focus {
-    background-color: #fd2d01;
+    background-color: $color-primary;
   }
   &-top {
     margin: 20px 0;
   }
 }
-
-// .addArticle {
-// background-color: white;
-// width: 50%;
-// margin: 50px auto auto auto;
-// border-radius: 20px;
-// padding: 10px 0 20px 0;
-// box-shadow: 1px 1px 10px rgb(212 212 212);
-// }
-
-// .formInput{
-//   margin: 20px;
-// }
-
-// #title{
-//   width: 50%;
-//   height: 25px;
-// }
-
-// textarea{
-//   width: 50%;
-//   height: 100px;
-//   margin-top: 15px;
-// }
-
-// input {
-//   margin-top: 20px;
-// }
 </style>

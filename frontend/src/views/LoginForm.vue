@@ -34,21 +34,6 @@
           Se connecter
         </button>
       </form>
-      <!-- <div>
-        <form action="" method="get" id="formLogin">
-          <div class="formEmail">
-            <label class="label" for="email">Email: </label><br>
-            <input v-model="userLogin.email" type="email" name="email" id="email" required>
-          </div>
-          <div class="formPassword">
-            <label class="label" for="password">Mot de passe: </label><br>
-            <input v-model="userLogin.password" type="password" name="password" id="password" required>
-          </div>
-          <div class="btnSignIn">
-            <button type="submit" @click.prevent="login">Se connecter</button>
-          </div>
-        </form>
-      </div> -->
     </div>
   </div>
 </template>
@@ -102,6 +87,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
+
+
+@import "@/../public/variable.scss";
 .cardForm {
   background-color: white;
   width: 50%;
@@ -109,6 +99,10 @@ export default {
   border-radius: 20px;
   padding: 10px 0 20px 0;
   box-shadow: 1px 1px 10px rgb(212 212 212);
+  @include mobile {
+    width: 90%;
+    margin-top: 25px;
+  }
 }
 
 .form-floating {
@@ -117,13 +111,13 @@ export default {
 }
 
 .btn-primary {
-  background-color: #fd2d01;
+  background-color: $color-primary;
   margin-top: 20px;
   &:hover {
-    background-color: #4e5166;
+    background-color: $color-tertiary;
   }
   &:focus {
-    background-color: #fd2d01;
+    background-color: $color-primary;
   }
   &-top {
     margin: 20px 0;

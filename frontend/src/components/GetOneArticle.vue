@@ -164,6 +164,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+@import "@/../public/variable.scss";
 .row {
   justify-content: center;
   margin: 30px 0;
@@ -213,6 +215,6 @@ export default {
 }
 
 .btn-sm:hover {
-  background-color: #fd2d01;
+  background-color: $color-primary;
 }
 </style>
