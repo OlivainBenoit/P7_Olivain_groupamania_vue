@@ -144,7 +144,6 @@ export default {
         },
       })
       .then((response) => {
-        console.log("rep", response);
         (this.title = response.data.title),
           (this.desc = response.data.description),
           (this.username = response.data.username),

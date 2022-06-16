@@ -80,12 +80,6 @@ exports.deleteArticles = (request, response) => {
     .catch((error) => response.status(500).json({ error }));
 };
 
-exports.getLikes = (request, response) => {
-  Article.findOne({ _id: request.params.id })
-    .then((article) => response.status(200).json(article))
-    .catch((e) => response.status(404).json({ e }));
-};
-
 exports.getAllArticles = (request, response) => {
   Article.find()
     .then((articles) => response.status(200).json(articles))
@@ -93,8 +87,6 @@ exports.getAllArticles = (request, response) => {
 };
 
 exports.getOneArticles = (request, response) => {
-  console.log(request.body);
-  console.log(request.params);
   Article.findOne({ _id: request.params.id })
     .then((article) => response.status(200).json(article))
     .catch((e) => response.status(404).json({ e }));

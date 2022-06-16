@@ -151,12 +151,13 @@ export default {
   },
   mounted() {
     axios
-      .get("http://localhost:3000/api/articles/" + this.post._id + "/like", {
+      .get("http://localhost:3000/api/articles/" + this.post._id, {
         headers: {
           Authorization: "Bearer " + this.user.token,
         },
       })
       .then((response) => {
+        console.log(response)
         this.likes = response.data.likes;
         const userInArray = response.data.usersLiked.includes(this.user.userId);
         if (userInArray) {
