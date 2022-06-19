@@ -6,3 +6,31 @@
 6: creer un css global pour index.html
 7: Pug au lieu d'html
 8: Typescript au lieu de js
+
+
+  <div class="cardForm">
+    <div class="form-edit-article">
+      <form>
+        <div class="form-floating mb-3">
+          <input v-model="title" type="title" name="title" class="form-control" id="floatingInput title"
+            placeholder="name@example.com" required />
+          <label for="floating-title">titre</label>
+        </div>
+        <div class="form-floating">
+          <input v-model="desc" type="description" name="description" class="form-control" id="floating-description"
+            placeholder="" required />
+          <label for="floating-description">Description</label>
+        </div>
+        <div class="form-floating">
+          <img class="cardImg" v-if="imageUrl !== undefined" :src="imageUrl" />
+          <input type="file" name="inputFile" id="fileImg" @change="onFileChange" />
+          <label class="label" for="inputFile">Image</label>
+        </div>
+        <div class="btnSignIn">
+          <button type="submit" class="btn btn-primary" @click.prevent="modifyArticle">
+            Sauvegarder
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

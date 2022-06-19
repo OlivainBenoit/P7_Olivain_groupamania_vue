@@ -1,5 +1,5 @@
 <template>
-  <div id="modifyArticle">
+  <!-- <div id="modifyArticle">
     <form action="/editarticle" method="put" id="formArticle">
       <div class="formInput">
         <label class="label" for="title"> Titre: </label><br />
@@ -33,6 +33,33 @@
         />
       </div>
     </form>
+  </div> -->
+
+  <div class="cardForm">
+    <div class="form-edit-article">
+      <form>
+        <div class="form-floating mb-3">
+          <input v-model="title" type="title" name="title" class="form-control" id="floatingInput title"
+            placeholder="name@example.com" required />
+          <label for="floating-title">titre</label>
+        </div>
+        <div class="form-floating">
+          <textarea v-model="desc" type="description" name="description" class="form-control form-textarea" id="floating-description"
+            placeholder="" required />
+          <label for="floating-description">Description</label>
+        </div>
+        <div class="form-floating">
+          <img class="cardImg" v-if="imageUrl !== undefined" :src="imageUrl" />
+          <input type="file" name="inputFile" id="fileImg" @change="onFileChange" />
+          <label class="label" for="inputFile"></label>
+        </div>
+        <div class="btnSignIn">
+          <button type="submit" class="btn btn-primary" @click.prevent="modifyArticle">
+            Sauvegarder
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -105,6 +132,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "@/../public/variable.scss";
+
 .addArticle {
   background-color: white;
   width: 50%;
@@ -112,15 +141,6 @@ export default {
   border-radius: 20px;
   padding: 10px 0 20px 0;
   box-shadow: 1px 1px 10px rgb(212 212 212);
-}
-
-.formInput {
-  margin: 20px;
-}
-
-#title {
-  width: 50%;
-  height: 25px;
 }
 
 textarea {
@@ -131,5 +151,42 @@ textarea {
 
 input {
   margin-top: 20px;
+}
+
+.form-floating {
+  width: 80%;
+  margin: auto;
+}
+
+.cardForm{
+  background-color: white;
+  width: 80%;
+  margin: auto;
+  border-radius: 20px;
+  padding: 10px 0 20px 0;
+  box-shadow: 1px 1px 10px rgb(212 212 212);
+  margin-top: 50px;
+}
+
+.form-textarea{
+  width: 100%;
+  min-height: 150px;
+}
+
+.btn-primary {
+  background-color: $color-primary;
+  margin-top: 20px;
+
+  &:hover {
+    background-color: $color-tertiary;
+  }
+
+  &:focus {
+    background-color: $color-primary;
+  }
+
+  &-top {
+    margin: 20px 0;
+  }
 }
 </style>

@@ -174,9 +174,9 @@ export default {
 @import "@/../public/variable.scss";
 .col {
   margin: 10px 0;
-}
-
-.card{
+  @include tablet {
+    width: 50%;
+  }
   @include mobile {
     width: 100%;
   }

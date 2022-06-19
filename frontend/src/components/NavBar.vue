@@ -103,20 +103,6 @@ nav {
   display: flex;
 }
 
-.linkRight {
-  margin-left: 30px;
-  @include mobile {
-      margin-left: 0px;
-    }
-}
-
-.linkLeft {
-  margin-right: 30px;
-  @include mobile {
-    margin-right: 0px;
-  }
-}
-
 .link{
   display: flex;
   justify-content: space-between;

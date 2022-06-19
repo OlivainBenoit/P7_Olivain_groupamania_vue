@@ -22,7 +22,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  min-height: 950px;
   background-color: $color-secondary;
+  min-height: 100vh;
+  margin: 0;
 }
 </style>

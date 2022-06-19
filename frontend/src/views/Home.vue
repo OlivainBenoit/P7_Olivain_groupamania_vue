@@ -1,7 +1,7 @@
 <template>
   <div class="home" v-if="this.user.token !== null">
     <AddArticle />
-    <div class="row row-cols-md-3">
+    <div class="row row-cols-3">
       <CardArticle v-for="post in allPosts" v-bind:key="post.id" :post="post" />
     </div>
   </div>
@@ -56,6 +56,12 @@ export default {
 
 <style scoped lang="scss">
 
+
+
+
+
+
+
 @import "@/../public/variable.scss";
 
 .row {
@@ -64,7 +70,9 @@ export default {
   flex-wrap: wrap-reverse;
   flex-direction: row-reverse;
   @include mobile {
-    flex-direction: column-reverse;
+  }
+  @include tablet {
+    
   }
 }
 

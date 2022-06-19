@@ -4,66 +4,31 @@
     <div class="formLoginSignup">
       <p>
         Vous avez déja un compte ?<router-link to="/login">
-          Connectez-vous</router-link
-        >
+          Connectez-vous</router-link>
       </p>
       <form>
         <div class="form-floating mb-3">
-          <input
-            v-model="userSignin.username"
-            type="email"
-            class="form-control"
-            id="floatingUsername"
-            placeholder="Bernard"
-            required
-          />
+          <input v-model="userSignin.username" type="email" class="form-control" id="floatingUsername"
+            placeholder="Bernard" required />
           <label for="floatingUsername">Nom d'utilisateur</label>
+          <div class="msg-err-username msg-err"></div>
         </div>
         <div class="form-floating mb-3">
-          <input
-            v-model="userSignin.email"
-            type="email"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-            required
-          />
+          <input v-model="userSignin.email" type="email" class="form-control" id="floatingInput"
+            placeholder="name@example.com" required />
           <label for="floatingInput">Adresse email</label>
+          <div class="msg-err-email msg-err"></div>
         </div>
         <div class="form-floating">
-          <input
-            v-model="userSignin.password"
-            type="password"
-            class="form-control"
-            id="floatingPassword"
-            placeholder="Password"
-            required
-          />
+          <input v-model="userSignin.password" type="password" class="form-control" id="floatingPassword"
+            placeholder="Password" required />
           <label for="floatingPassword">Mot de passe</label>
+          <div class="msg-err-password msg-err"></div>
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="SignIn">
           S'inscrire
         </button>
       </form>
-      <!-- <div>
-        <form action="" method="get" id="formLogin">
-          <div class="formUsername">
-            <label class="label" for="username">Pseudo: </label><br>
-            <input v-model="userSignin.username" type="username" name="username" id="username" required>
-          </div>
-          <div class="formEmail">
-            <label class="label" for="email">Email: </label><br>
-            <input v-model="userSignin.email" type="email" name="email" id="email" required>
-          </div>
-          <div class="formPassword">
-            <label class="label" for="password">Mot de passe: </label><br>
-            <input v-model="userSignin.password" type="password" name="password" id="password" required>
-          </div>
-          <div class="divBtnSignIn">
-            <button class="btnSignIn" type="submit" @click.prevent="SignIn">S'inscrire</button>
-          </div>
-        </form>
-      </div> -->
     </div>
   </div>
 </template>
@@ -89,8 +54,25 @@ export default {
   },
   methods: {
     SignIn() {
-      if (this.userSignin.email === null || this.userSignin.password === null) {
+      //eslint-disable-next-line
+      let emailRegex = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,4}$/;
+      //eslint-disable-next-line
+      let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+      //eslint-disable-next-line
+      let usernameRegex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s-]{3,60}$/;
+      document.querySelector(".msg-err-username").innerHTML = "";
+      document.querySelector(".msg-err-email").innerHTML = "";
+      document.querySelector(".msg-err-password").innerHTML = "";
+
+      if (this.userSignin.email === null || this.userSignin.password === null || this.userSignin.username === null) {
         alert("veuillez remplir le formulaire");
+      } if (!this.userSignin.username.match(usernameRegex)) {
+        document.querySelector(".msg-err-username").innerHTML = "Veuillez choisir un nom d'utilisateur valide !";
+      } if (!this.userSignin.email.match(emailRegex)){
+        document.querySelector(".msg-err-email").innerHTML = "Veuillez choisir un email valide !";
+      } if (!this.userSignin.password.match(passwordRegex)) {
+        document.querySelector(".msg-err-password")
+          .innerHTML = "Veuillez choisir un mot de passe valide ! Il doit contenir au moins 8 caractères dont une majuscule, une minuscule et un chiffre";
       } else {
         axios
           .post("http://localhost:3000/api/auth/signup", this.userSignin, {})
@@ -111,8 +93,8 @@ export default {
 
 
 
-
 @import "@/../public/variable.scss";
+
 .cardForm {
   background-color: white;
   width: 50%;
@@ -120,6 +102,15 @@ export default {
   border-radius: 20px;
   padding: 10px 0 20px 0;
   box-shadow: 1px 1px 10px rgb(212 212 212);
+  @include tablet {
+      width: 70%;
+      margin: auto;
+      margin-top: 25px;
+    }
+  @include mobile {
+      width: 90%;
+      margin-top: 25px;
+    }
 }
 
 .form-floating {
@@ -139,5 +130,9 @@ export default {
   &-top {
     margin: 20px 0;
   }
+}
+
+.msg-err {
+  color: red;
 }
 </style>

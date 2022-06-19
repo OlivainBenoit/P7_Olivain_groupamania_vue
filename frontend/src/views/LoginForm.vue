@@ -4,31 +4,20 @@
     <div class="formLoginSignup">
       <p>
         Vous n'avez pas de compte ?<router-link to="/signin">
-          Inscrivez-vous</router-link
-        >
+          Inscrivez-vous</router-link>
       </p>
       <form>
         <div class="form-floating mb-3">
-          <input
-            v-model="userLogin.email"
-            type="email"
-            class="form-control"
-            id="floatingInput"
-            placeholder="name@example.com"
-            required
-          />
+          <input v-model="userLogin.email" type="email" class="form-control" id="floatingInput"
+            placeholder="name@example.com" required />
           <label for="floatingInput">Adresse email</label>
+          <div class="msg-err-email msg-err"></div>
         </div>
         <div class="form-floating">
-          <input
-            v-model="userLogin.password"
-            type="password"
-            class="form-control"
-            id="floatingPassword"
-            placeholder="Password"
-            required
-          />
+          <input v-model="userLogin.password" type="password" class="form-control" id="floatingPassword"
+            placeholder="Password" required />
           <label for="floatingPassword">Mot de passe</label>
+          <div class="msg-err-password msg-err"></div>
         </div>
         <button type="submit" class="btn btn-primary" @click.prevent="login">
           Se connecter
@@ -56,8 +45,19 @@ export default {
   },
   methods: {
     login() {
+      //eslint-disable-next-line
+      let emailRegex = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,4}$/;
+      //eslint-disable-next-line
+      let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+      document.querySelector(".msg-err-email").innerHTML = "";
+      document.querySelector(".msg-err-password").innerHTML = "";
+
       if (this.userLogin.email === null || this.userLogin.password === null) {
         alert("veuillez remplir le formulaire");
+      } if (!this.userLogin.email.match(emailRegex)) {
+        document.querySelector(".msg-err-email").innerHTML = "Veuillez choisir un email valide !";
+      } if (!this.userLogin.password.match(passwordRegex)) {
+        document.querySelector(".msg-err-password").innerHTML = "Veuillez choisir un mot de passe valide !";
       } else {
         axios
           .post("http://localhost:3000/api/auth/login", {
@@ -91,17 +91,25 @@ export default {
 
 
 
+
+
 @import "@/../public/variable.scss";
 .cardForm {
   background-color: white;
   width: 50%;
-  margin: 50px auto auto auto;
+  margin: auto;
+  margin-top: 50px;
   border-radius: 20px;
   padding: 10px 0 20px 0;
   box-shadow: 1px 1px 10px rgb(212 212 212);
-  @include mobile {
-    width: 90%;
+  @include tablet {
+    width: 70%;
+    margin: auto;
     margin-top: 25px;
+  }
+  @include mobile {
+  width: 90%;
+  margin-top: 25px;
   }
 }
 
@@ -123,4 +131,9 @@ export default {
     margin: 20px 0;
   }
 }
+
+.msg-err{
+  color: red;
+}
+
 </style>
