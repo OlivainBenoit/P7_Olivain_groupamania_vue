@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import store from "../store/index.js";
 import router from "../router/index.js";
+import { login } from "@/utils/api"
 
 export default {
   name: "LoginForm",
@@ -44,7 +44,7 @@ export default {
     };
   },
   methods: {
-    login() {
+    async login() {
       //eslint-disable-next-line
       let emailRegex = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,4}$/;
       //eslint-disable-next-line
@@ -59,39 +59,28 @@ export default {
       } if (!this.userLogin.password.match(passwordRegex)) {
         document.querySelector(".msg-err-password").innerHTML = "Veuillez choisir un mot de passe valide !";
       } else {
-        axios
-          .post("http://localhost:3000/api/auth/login", {
+        const response = await login(this.userLogin.email, this.userLogin.password)
+        try {
+          console.log(response);
+          const user = {
+            userId: response.data.userId,
             email: this.userLogin.email,
-            password: this.userLogin.password,
-          })
-          .then((response) => {
-            console.log(response.data);
-            const user = {
-              userId: response.data.userId,
-              email: this.userLogin.email,
-              token: response.data.token,
-              isAdmin: response.data.isAdmin,
-              username: response.data.username,
-            };
-            console.log("réponse: ", response);
-            this.$store.commit("setUser", user);
-            router.push({ name: "home" });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            token: response.data.token,
+            isAdmin: response.data.isAdmin,
+            username: response.data.username,
+          };
+          this.$store.commit("setUser", user);
+          router.push({ name: "home" });
+        } catch (error) {
+          console.log(error);
+        }
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
-
-
-
-
-
 
 @import "@/../public/variable.scss";
 .cardForm {

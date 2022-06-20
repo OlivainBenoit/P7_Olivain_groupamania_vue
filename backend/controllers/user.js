@@ -3,19 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-let emailRegex = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,4}$/;
-let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-
 exports.signup = (request, response) => {
-  // if (!request.body.email.match(emailRegex)) {
-  //   return response.status(400).json({ error: "E-mail non valide" });
-  // }
-  // if (!request.body.password.match(passwordRegex)) {
-  //   return response.status(400).json({
-  //     error:
-  //       "Le mot de passe doit contenir 8 caractères minimum, avec un chiffre, une lettre minuscule et une lettre majuscule et aucun caractères spéciaux",
-  //   });
-  // }
   bcrypt
     .hash(request.body.password, 10)
     .then((hash) => {
@@ -35,6 +23,7 @@ exports.signup = (request, response) => {
 };
 
 exports.login = (request, response) => {
+  console.log("request :", request.body);
   User.findOne({ email: request.body.email })
     .then((user) => {
       console.log(user);
@@ -44,6 +33,7 @@ exports.login = (request, response) => {
       bcrypt
         .compare(request.body.password, user.password)
         .then((valid) => {
+          console.log("valid :", valid);
           if (!valid) {
             return response
               .status(401)

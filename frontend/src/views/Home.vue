@@ -9,8 +9,8 @@
 
 <script>
 import CardArticle from "../components/CardArticle.vue"
-import axios from "axios";
 import AddArticle from "@/components/AddArticle.vue"
+import { getAllArticles } from "@/utils/api"
 
 
 
@@ -37,18 +37,14 @@ export default {
     CardArticle,
     AddArticle
 },
-  mounted() {
-    axios.get("http://localhost:3000/api/articles", {
-      headers: {
-        Authorization: "Bearer " + this.user.token
-        }
-      })
-        .then(response => { 
-          this.allPosts = response.data;
-        })
-        .catch(error => {
-          return error;
-        })
+  async mounted() {
+    const response = await getAllArticles();
+    try {
+      console.log(response)
+      this.allPosts = response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="card-footer">
-          <small class="text-muted">Posté par {{ username }}</small>
+          <small class="text-muted">{{ username }}</small>
           <small class="text-muted">{{ date }}</small>
         </div>
       </div>
@@ -54,8 +54,10 @@
 </template>
 
 <script>
-import axios from "axios";
 import router from "@/router/index.js";
+import { getOneArticle } from "@/utils/api.js";
+import { deleteArticle } from "@/utils/api.js";
+import { sendLike } from "@/utils/api.js";
 
 export default {
   name: "CardArticle",
@@ -80,85 +82,65 @@ export default {
     },
   },
   methods: {
-    deletePost() {
-      var confirmPopUp = confirm(
-        `Voulez-vous supprimer le post ${this.title} ?`
-      );
+    async deletePost() {
+        var confirmPopUp = confirm(
+          `Voulez-vous supprimer le post ${this.post.title} ?`
+        );
 
-      if (confirmPopUp) {
-        axios
-          .delete("http://localhost:3000/api/articles/" + this.articleId, {
-            headers: {
-              Authorization: "Bearer " + this.user.token,
-            },
-            data: {
-              postId: this.articleId,
-              isAdmin: this.user.isAdmin,
-            },
-          })
-          .then(() => {
+        if (confirmPopUp) {
+          const response = await deleteArticle(this.articleId, this.user.isAdmin)
+          try {
+            console.log(response);
             window.location.reload();
-          })
-          .catch((error) => console.log(error));
-      }
-    },
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      },
     modifyPost() {
       router.push({
         name: "editarticle",
         params: { articleId: this.articleId },
       });
     },
-    sendLike() {
-      console.log(this.userId);
-      axios
-        .post(
-          "http://localhost:3000/api/articles/" + this.articleId + "/like",
-          {
-            userId: this.user.userId,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + this.user.token,
-            },
-          }
-        )
-        .then((response) => {
-          this.likes = response.data.article.likes;
-          const userInArray = response.data.article.usersLiked.includes(
-            this.user.userId
-          );
-          if (userInArray) {
-            this.onLike = true;
-          } else {
-            this.onLike = false;
-          }
-        })
-        .catch((error) => console.log(error));
-    },
-  },
-  mounted() {
-    axios
-      .get("http://localhost:3000/api/articles/" + this.articleId, {
-        headers: {
-          Authorization: "Bearer " + this.user.token,
-        },
-      })
-      .then((response) => {
-        (this.title = response.data.title),
-          (this.desc = response.data.description),
-          (this.username = response.data.username),
-          (this.date = response.data.date),
-          (this.userId = response.data.userId);
-        if (response.data.imageUrl !== undefined) {
-          this.imageUrl = response.data.imageUrl;
-        }
-        this.likes = response.data.likes;
-        const userInArray = response.data.usersLiked.includes(this.user.userId);
+    async sendLike() {
+      const response = await sendLike(this.articleId, this.user.userId)
+      try {
+        this.likes = response.data.article.likes;
+        const userInArray = response.data.article.usersLiked.includes(
+          this.user.userId
+        );
         if (userInArray) {
           this.onLike = true;
+        } else {
+          this.onLike = false;
         }
-      })
-      .catch((error) => console.log(error));
+      }
+      catch (error) {
+        console.log(error)
+      }
+    },
+  },
+  async mounted() {
+    const response = await getOneArticle(this.articleId)
+    try {
+      console.log(response)
+      this.title = response.data.title,
+        this.desc = response.data.description,
+        this.username = response.data.username,
+        this.date = response.data.date,
+        this.userId = response.data.userId;
+      if (response.data.imageUrl !== undefined) {
+        this.imageUrl = response.data.imageUrl;
+      }
+      this.likes = response.data.likes;
+      const userInArray = response.data.usersLiked.includes(this.user.userId);
+      if (userInArray) {
+        this.onLike = true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>

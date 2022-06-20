@@ -4,7 +4,6 @@ const { request } = require("http");
 
 exports.createArticles = (request, response) => {
   const articleObject = request.body;
-  // delete articleObject._id;
   if (request.file !== undefined) {
     const article = new Article({
       ...articleObject,
@@ -28,7 +27,6 @@ exports.createArticles = (request, response) => {
 };
 
 exports.modifyArticles = (request, response) => {
-  console.log(request.body);
   const articleObject = request.file
     ? {
         ...request.body,
@@ -60,7 +58,6 @@ exports.modifyArticles = (request, response) => {
 };
 
 exports.deleteArticles = (request, response) => {
-  console.log(request.body);
   Article.findOne({ _id: request.body.postId })
     .then((article) => {
       if (
@@ -96,7 +93,6 @@ exports.like = (request, response) => {
   Article.findOne({ _id: request.params.id })
     .then((article) => {
       const liked = article.usersLiked.includes(request.body.userId);
-      console.log(article);
       if (liked) {
         article.likes--;
         article.usersLiked = article.usersLiked.filter(

@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Posté par {{ post.username }}</small>
+        <small class="text-muted">{{ post.username }}</small>
         <small class="text-muted">{{ post.date }}</small>
       </div>
     </div>
@@ -66,8 +66,11 @@
 </template>
 
 <script>
-import axios from "axios";
 import router from "../router/index.js";
+import { deleteArticle } from "@/utils/api.js";
+import { sendLike } from "@/utils/api.js";
+import { getOneArticle } from "@/utils/api.js";
+
 
 export default {
   name: "CardArticle",
@@ -88,26 +91,19 @@ export default {
     },
   },
   methods: {
-    deletePost() {
+    async deletePost() {
       var confirmPopUp = confirm(
         `Voulez-vous supprimer le post ${this.post.title} ?`
       );
 
       if (confirmPopUp) {
-        axios
-          .delete("http://localhost:3000/api/articles/" + this.post._id, {
-            headers: {
-              Authorization: "Bearer " + this.user.token,
-            },
-            data: {
-              postId: this.post._id,
-              isAdmin: this.user.isAdmin,
-            },
-          })
-          .then(() => {
-            window.location.reload();
-          })
-          .catch((error) => console.log(error));
+        const response = await deleteArticle(this.post._id, this.user.isAdmin)
+        try {
+          console.log(response);
+          window.location.reload(); 
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     modifyPost() {
@@ -116,31 +112,22 @@ export default {
         params: { articleId: this.post._id },
       });
     },
-    sendLike() {
-      axios
-        .post(
-          "http://localhost:3000/api/articles/" + this.post._id + "/like",
-          {
-            userId: this.user.userId,
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + this.user.token,
-            },
-          }
-        )
-        .then((response) => {
-          this.likes = response.data.article.likes;
-          const userInArray = response.data.article.usersLiked.includes(
-            this.user.userId
-          );
-          if (userInArray) {
-            this.onLike = true;
-          } else {
-            this.onLike = false;
-          }
-        })
-        .catch((error) => console.log(error));
+    async sendLike() {
+      const response = await sendLike(this.post._id, this.user.userId)
+      try {
+        this.likes = response.data.article.likes;
+        const userInArray = response.data.article.usersLiked.includes(
+          this.user.userId
+        );
+        if (userInArray) {
+          this.onLike = true;
+        } else {
+          this.onLike = false;
+        }
+      }
+      catch (error) {
+        console.log(error)
+      }
     },
     getOneArticle() {
       router.push({
@@ -149,22 +136,17 @@ export default {
       });
     },
   },
-  mounted() {
-    axios
-      .get("http://localhost:3000/api/articles/" + this.post._id, {
-        headers: {
-          Authorization: "Bearer " + this.user.token,
-        },
-      })
-      .then((response) => {
-        console.log(response)
-        this.likes = response.data.likes;
-        const userInArray = response.data.usersLiked.includes(this.user.userId);
-        if (userInArray) {
-          this.onLike = true;
-        }
-      })
-      .catch((error) => console.log(error));
+  async mounted() {
+    const response = await getOneArticle(this.post._id)
+    try {
+      this.likes = response.data.likes;
+      const userInArray = response.data.usersLiked.includes(this.user.userId);
+      if (userInArray) {
+        this.onLike = true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
@@ -221,6 +203,10 @@ export default {
 
 .btn-sm:hover {
   background-color: $color-primary;
+}
+
+a {
+  cursor: pointer;
 }
 </style>
 

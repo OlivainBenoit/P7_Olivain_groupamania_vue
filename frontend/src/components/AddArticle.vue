@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import { postArticle } from "@/utils/api"
 
 export default {
   name: "AddArticle",
@@ -102,7 +102,7 @@ export default {
     },
   },
   methods: {
-    postArticle() {
+    async postArticle() {
       let dateNow = new Date();
 
       let dateLocal = dateNow.toLocaleString("fr-FR", {
@@ -126,19 +126,13 @@ export default {
       if (this.title === null && this.description === null) {
         alert("veuillez remplir le formulaire");
       } else {
-        axios
-          .post("http://localhost:3000/api/articles", data, {
-            headers: {
-              Authorization: "Bearer " + this.user.token,
-            },
-          })
-          .then(function (response) {
-            console.log(response);
-            window.location.reload();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        const response = await postArticle(data);
+        try {
+          console.log(response);
+          window.location.reload();
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     onFileChange(e) {
@@ -149,9 +143,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
-
 
 @import "@/../public/variable.scss";
 .modal-footer {
