@@ -81,15 +81,6 @@ export default {
         } catch (error) {
           console.log(error);
         }
-        // axios
-        //   .post("http://localhost:3000/api/auth/signup", this.userSignin, {})
-        //   .then(function (response) {
-        //     console.log(response);
-        //     router.push({ name: "login" });
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
       }
     },
   },

@@ -115,6 +115,7 @@ export default {
     async sendLike() {
       const response = await sendLike(this.post._id, this.user.userId)
       try {
+        console.log(response)
         this.likes = response.data.article.likes;
         const userInArray = response.data.article.usersLiked.includes(
           this.user.userId
