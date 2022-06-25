@@ -56,8 +56,4 @@ node server
 
 - Ouvrez votre navigateur à l'adresse: http://localhost:8080/
 
-- Vous voyez l'écran de connexion à l'application. Allez dans la rubrique INSCRIPTION, inscrivez l'utilisateur de votre choix en suivant les instructions, puis connectez-vous.
-
-Le site vous permet de partager des post pouvant contenir des images. Vous pouvez supprimer votre compte. L'administrateur peut supprimer ou modifier n'importe quel post.
-
 Bonne navigation!
