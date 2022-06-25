@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import router from "@/router/index.js";
 import { signUp } from "@/utils/api"
 
@@ -48,9 +47,6 @@ export default {
         username: null,
       },
     };
-  },
-  computed: {
-    ...mapState(["user"]),
   },
   methods: {
     async signUp() {
@@ -117,13 +113,13 @@ export default {
 }
 
 .btn-primary {
-  background-color: $color-primary;
+  background-color: $color-tertiary;
   margin-top: 20px;
   &:hover {
-    background-color: $color-tertiary;
+    background-color: $color-primary;
   }
   &:focus {
-    background-color: $color-primary;
+    background-color: $color-tertiary;
   }
   &-top {
     margin: 20px 0;

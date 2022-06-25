@@ -2,40 +2,25 @@
   <div class="row">
     <div class="col">
       <div class="card">
-        <img v-if="imageUrl !== null" class="card-img-top" :src="imageUrl" />
-        <img
-          v-else
-          class="card-img-top"
-          src="@/../public/Images/No_image_available.jpg"
-        />
+        <img v-if="imageUrl !== null" class="card-img-top" :src="imageUrl" :alt="title" />
+        <img v-else class="card-img-top" src="@/../public/Images/No_image_available.jpg" alt="Pas d'image" />
         <div class="card-body">
           <h5 class="card-title">{{ title }}</h5>
           <p class="card-text">{{ desc }}</p>
           <div class="card-btn-group">
             <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-secondary"
-                @click="deletePost"
-                v-if="userId === this.user.userId || this.user.isAdmin === true"
-              >
+              <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Supprimer" @click="deletePost"
+                v-if="userId === this.user.userId || this.user.isAdmin === true">
                 <i class="fa-solid fa-trash-can"></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-secondary"
-                @click="modifyPost"
-                v-if="userId === this.user.userId || this.user.isAdmin === true"
-              >
+              <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Modifier" @click="modifyPost"
+                v-if="userId === this.user.userId || this.user.isAdmin === true">
                 <i class="fa-solid fa-pen-to-square"></i>
               </button>
             </div>
             <div class="btn-like">
               <a @click="sendLike">
-                <i
-                  v-if="onLike === false"
-                  class="fa-solid fa-thumbs-up iconLike"
-                ></i>
+                <i v-if="onLike === false" class="fa-solid fa-thumbs-up iconLike"></i>
                 <i v-else class="fa-solid fa-thumbs-up iconOnLike"></i>
               </a>
               <div class="countLike">
@@ -158,9 +143,8 @@ export default {
 }
 
 .card-img-top {
-  max-height: 400px;
+  max-height: 550px;
   width: auto;
-  object-fit: cover;
 }
 
 .card-footer {

@@ -4,7 +4,6 @@ import LoginForm from "../views/LoginForm.vue";
 import SignIn from "../views/SignIn.vue";
 import EditArticle from "../components/EditArticle.vue";
 import GetOneArticle from "@/components/GetOneArticle.vue";
-// ~/ racine donc p7_réseau ou frontend....
 
 const routes = [
   {

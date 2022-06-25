@@ -1,56 +1,37 @@
 <template>
   <div class="col">
     <div class="card h-100">
-      <a @click="getOneArticle">
-        <img
-          v-if="post.imageUrl !== undefined"
-          class="card-img-top"
-          :src="post.imageUrl"
-        />
-        <img
-          v-else
-          class="card-img-top"
-          src="@/../public/Images/No_image_available.jpg"
-        />
-      </a>
+      <div @click="getOneArticle">
+        <img v-if="post.imageUrl !== undefined" class="card-img-top" :src="post.imageUrl" :alt="post.title" />
+        <img v-else class="card-img-top" src="@/../public/Images/No_image_available.jpg" alt="Pas d'image" />
+      </div>
       <div class="card-body">
-        <a @click="getOneArticle">
+        <div @click="getOneArticle">
           <h5 class="card-title">{{ post.title }}</h5>
           <p class="card-text">{{ post.description }}</p>
-        </a>
+        </div>
         <div class="card-btn-group">
           <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-sm btn-outline-secondary"
-              @click="deletePost"
+            <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Supprimer" @click="deletePost"
               v-if="
                 this.post.userId === this.user.userId ||
                 this.user.isAdmin === true
-              "
-            >
+              ">
               <i class="fa-solid fa-trash-can"></i>
             </button>
-            <button
-              type="button"
-              class="btn btn-sm btn-outline-secondary"
-              @click="modifyPost"
+            <button type="button" class="btn btn-sm btn-outline-secondary" aria-label="Modifier" @click="modifyPost"
               v-if="
                 this.post.userId === this.user.userId ||
                 this.user.isAdmin === true
-              "
-            >
+              ">
               <i class="fa-solid fa-pen-to-square"></i>
             </button>
           </div>
           <div class="btn-like">
-            <a @click="sendLike">
-              <i
-                v-if="onLike === false"
-                class="fa-solid fa-thumbs-up iconLike"
-              ></i>
+            <div @click="sendLike">
+              <i v-if="onLike === false" class="fa-solid fa-thumbs-up iconLike"></i>
               <i v-else class="fa-solid fa-thumbs-up iconOnLike"></i>
-            </a>
+            </div>
             <div class="countLike">
               {{ likes }}
             </div>
@@ -166,13 +147,15 @@ export default {
 }
 
 .card-img-top {
-  max-height: 200px;
+  height: 200px;
+  width: 100%;
   object-fit: cover;
 }
 
 .card-footer {
   display: flex;
   justify-content: space-between;
+  font-size: 17px;
 }
 
 .card-btn-group {
@@ -204,6 +187,10 @@ export default {
 
 .btn-sm:hover {
   background-color: $color-primary;
+}
+
+.card-btn-group {
+  margin-top : 10px;
 }
 
 a {

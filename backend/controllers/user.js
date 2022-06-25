@@ -38,6 +38,6 @@ exports.login = async (request, response) => {
       username: user.username,
     });
   } catch (e) {
-    response.status(500).json({ error });
+    response.status(500).json({ e });
   }
 };

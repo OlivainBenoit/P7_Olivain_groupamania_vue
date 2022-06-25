@@ -1,8 +1,0 @@
-1: async await et degager les .then.catch
-2: Axios dans API.js
-3: Store & replacer les CSS ID en classes -> et les scoped img 
-4: Routes.push au lieu de window.location
-5. changer les noms en fonction de : js camelCase, css snake-case
-6: creer un css global pour index.html
-7: Pug au lieu d'html
-8: Typescript au lieu de js

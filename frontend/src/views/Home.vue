@@ -52,12 +52,6 @@ export default {
 
 <style scoped lang="scss">
 
-
-
-
-
-
-
 @import "@/../public/variable.scss";
 
 .row {
@@ -74,6 +68,11 @@ export default {
 
 h2 {
   font-size: 1.3em;
+}
+
+.title{
+  margin-top: 20px;
+  font-size: 30px;
 }
 
 </style>

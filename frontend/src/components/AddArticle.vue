@@ -1,81 +1,35 @@
 <template>
-  <button
-    type="button"
-    class="btn btn-primary btn-primary-top"
-    data-bs-toggle="modal"
-    data-bs-target="#staticBackdrop"
-  >
+  <button type="button" class="btn btn-primary btn-primary-top" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+    aria-label="Creer un post">
     Creer un post
   </button>
 
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="staticBackdrop"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-body">
           <div class="modal-close">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <form
-            action=""
-            method="get"
-            id="formArticle"
-            class="form-floating mb-3"
-          >
+          <form action="" method="get" id="formArticle" class="form-floating mb-3">
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label"></label>
-              <input
-                v-model="title"
-                type="email"
-                class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="Titre"
-              />
+              <input v-model="title" type="email" class="form-control" id="exampleFormControlInput1" placeholder="Titre"
+                aria-label="Titre" />
             </div>
             <div class="mb-3">
-              <label
-                for="exampleFormControlTextarea1"
-                class="form-label"
-              ></label>
-              <textarea
-                v-model="description"
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-                placeholder="Description"
-              ></textarea>
+              <textarea v-model="description" class="form-control" id="exampleFormControlTextarea1" rows="3"
+                placeholder="Description" aria-label="Description"></textarea>
             </div>
             <div class="mb-3">
-              <label for="formFile" class="form-label"></label>
-              <input
-                class="form-control"
-                type="file"
-                name="inputFile"
-                id="formFile"
-                @change="onFileChange"
-              />
+              <input class="form-control" type="file" name="inputFile" id="formFile" aria-label="Photo"
+                @change="onFileChange" />
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-primary btn-primary-center"
-            @click.prevent="postArticle"
-          >
+          <button type="button" class="btn btn-primary btn-primary-center" @click.prevent="postArticle">
             Envoyer
           </button>
         </div>
@@ -156,12 +110,12 @@ export default {
 }
 
 .btn-primary {
-  background-color: $color-primary;
+  background-color: $color-tertiary;
   &:hover {
-    background-color: $color-tertiary;
+    background-color: $color-primary;
   }
   &:focus {
-    background-color: $color-primary;
+    background-color: $color-tertiary;
   }
   &-top {
     margin: 20px 0;
