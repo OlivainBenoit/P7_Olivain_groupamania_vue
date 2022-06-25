@@ -1,40 +1,4 @@
 <template>
-  <!-- <div id="modifyArticle">
-    <form action="/editarticle" method="put" id="formArticle">
-      <div class="formInput">
-        <label class="label" for="title"> Titre: </label><br />
-        <input v-model="title" type="title" name="title" id="title" required />
-      </div>
-      <div class="formInput">
-        <label class="label" for="description">Description: </label><br />
-        <textarea
-          v-model="desc"
-          type="description"
-          name="description"
-          id="description"
-          required
-        ></textarea>
-      </div>
-      <div class="formInput">
-        <img class="cardImg" v-if="imageUrl !== undefined" :src="imageUrl" />
-        <label class="label" for="inputFile">Image: </label><br />
-        <input
-          type="file"
-          name="inputFile"
-          id="fileImg"
-          @change="onFileChange"
-        />
-      </div>
-      <div class="btnSignIn">
-        <input
-          type="submit"
-          @click.prevent="modifyArticle"
-          value="Sauvegarder"
-        />
-      </div>
-    </form>
-  </div> -->
-
   <div class="cardForm">
     <div class="form-edit-article">
       <form>
@@ -65,8 +29,8 @@
 
 <script>
 import { modifyArticle } from "../utils/api";
+import { getOneArticle } from "../utils/api";
 import router from "../router/index.js";
-import axios from "axios";
 
 export default {
   name: "EditArticle",
@@ -112,23 +76,19 @@ export default {
       this.imageUrl = e.target.files[0];
     },
   },
-  mounted() {
-    axios
-      .get("http://localhost:3000/api/articles/" + this.articleId, {
-        headers: {
-          Authorization: "Bearer " + this.user.token,
-        },
-      })
-      .then((response) => {
-        (this.title = response.data.title),
-          (this.desc = response.data.description);
+  async mounted() {
+      const response = await getOneArticle(this.articleId);
+      try {
+        this.title = response.data.title,
+          this.desc = response.data.description
         if (response.data.imageUrl !== undefined) {
           this.imageUrl = response.data.imageUrl;
         }
-      })
-      .catch((error) => console.log(error));
-  },
-};
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 </script>
 
 <style scoped lang="scss">

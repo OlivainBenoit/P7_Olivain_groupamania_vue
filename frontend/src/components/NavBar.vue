@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <img id="logoHeader" src="../../public/Images/icon-left-font-monochrome-white.png" />
+    <h1><img id="logoHeader" src="../../public/Images/icon-left-font-monochrome-white.png" alt="logo-groupomania" /></h1>
     <div class="link">
       <div id="linkLeft">
         <div class="linkLeft">
@@ -75,6 +75,7 @@ nav {
     position: absolute;
     left: 50%;
     margin-left: -115px;
+    top: 2%;
     @include mobile {
       height: 30px;
       position: static;
@@ -88,8 +89,11 @@ nav {
     color: white;
 
     &.router-link-exact-active {
-      color: $color-primary;
+      color: $color-secondary;
     }
+        &:hover {
+          color: $color-primary;
+        }
   }
 }
 

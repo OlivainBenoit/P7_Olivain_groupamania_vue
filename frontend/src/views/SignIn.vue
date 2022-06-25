@@ -25,7 +25,7 @@
           <label for="floatingPassword">Mot de passe</label>
           <div class="msg-err-password msg-err"></div>
         </div>
-        <button type="submit" class="btn btn-primary" @click.prevent="SignIn">
+        <button type="submit" class="btn btn-primary" @click.prevent="signUp">
           S'inscrire
         </button>
       </form>
@@ -34,9 +34,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapState } from "vuex";
 import router from "@/router/index.js";
+import { signUp } from "@/utils/api"
 
 export default {
   name: "SignIn",
@@ -49,17 +48,14 @@ export default {
       },
     };
   },
-  computed: {
-    ...mapState(["user"]),
-  },
   methods: {
-    SignIn() {
+    async signUp() {
       //eslint-disable-next-line
       let emailRegex = /^[a-zA-Z0-9._\-]+@[a-zA-Z0-9._\-]+\.[a-zA-Z]{2,4}$/;
       //eslint-disable-next-line
       let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
       //eslint-disable-next-line
-      let usernameRegex = /^[a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s-]{3,60}$/;
+      let usernameRegex = /^[a-zA-Z1-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ\s-]{3,60}$/;
       document.querySelector(".msg-err-username").innerHTML = "";
       document.querySelector(".msg-err-email").innerHTML = "";
       document.querySelector(".msg-err-password").innerHTML = "";
@@ -74,15 +70,13 @@ export default {
         document.querySelector(".msg-err-password")
           .innerHTML = "Veuillez choisir un mot de passe valide ! Il doit contenir au moins 8 caractères dont une majuscule, une minuscule et un chiffre";
       } else {
-        axios
-          .post("http://localhost:3000/api/auth/signup", this.userSignin, {})
-          .then(function (response) {
-            console.log(response);
-            router.push({ name: "login" });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        const response = await signUp(this.userSignin)
+        try {
+          console.log(response);
+          router.push({ name: "login" });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   },
@@ -119,13 +113,13 @@ export default {
 }
 
 .btn-primary {
-  background-color: $color-primary;
+  background-color: $color-tertiary;
   margin-top: 20px;
   &:hover {
-    background-color: $color-tertiary;
+    background-color: $color-primary;
   }
   &:focus {
-    background-color: $color-primary;
+    background-color: $color-tertiary;
   }
   &-top {
     margin: 20px 0;

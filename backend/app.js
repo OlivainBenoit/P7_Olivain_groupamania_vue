@@ -1,5 +1,3 @@
-// mpd mongoDB : 25IyLMJS0NZNWjvb
-
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
