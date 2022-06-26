@@ -6,10 +6,10 @@
     * Node.js (et donc npm),
     * Git.
 
-- Créer un dossier vide et cloner ce repository à l'intérieur:
+- Créer un dossier vide et cloner ce repository à l'intérieur: 
 
 ```bash
-git clone https://github.com/RafaRemote/P7-Groupomania.git
+git clone https://github.com/OlivainBenoit/P7_Olivain_groupamania_vue
 ```
 
 - Vous verrez deux dossiers distincts: Frontend et Backend.
