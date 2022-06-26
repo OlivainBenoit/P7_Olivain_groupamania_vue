@@ -1,12 +1,12 @@
 <template>
   <div class="col">
     <div class="card h-100">
-      <div @click="getOneArticle">
-        <img v-if="post.imageUrl !== undefined" class="card-img-top" :src="post.imageUrl" :alt="post.title" />
-        <img v-else class="card-img-top" src="@/../public/Images/No_image_available.jpg" alt="Pas d'image" />
+      <div class="card-link" @click="getOneArticle">
+          <img v-if="post.imageUrl !== undefined" class="card-img-top" :src="post.imageUrl" :alt="post.title" width="100%" height="300px"/>
+          <img v-else class="card-img-top" src="@/../public/Images/No_image_available.jpg" alt="Pas d'image" />
       </div>
       <div class="card-body">
-        <div @click="getOneArticle">
+        <div class="card-link" @click="getOneArticle">
           <h5 class="card-title">{{ post.title }}</h5>
           <p class="card-text">{{ post.description }}</p>
         </div>
@@ -28,7 +28,7 @@
             </button>
           </div>
           <div class="btn-like">
-            <div @click="sendLike">
+            <div class="card-link" @click="sendLike">
               <i v-if="onLike === false" class="fa-solid fa-thumbs-up iconLike"></i>
               <i v-else class="fa-solid fa-thumbs-up iconOnLike"></i>
             </div>
@@ -193,7 +193,7 @@ export default {
   margin-top : 10px;
 }
 
-a {
+.card-link {
   cursor: pointer;
 }
 </style>

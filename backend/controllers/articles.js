@@ -2,11 +2,11 @@ const Article = require("../models/articles");
 const fs = require("fs");
 const { request } = require("http");
 const { Console } = require("console");
+const sharp = require("sharp");
 
 exports.createArticles = async (request, response) => {
   try {
     const articleObject = request.body;
-    console.log(request.file);
     if (request.file !== undefined) {
       const article = new Article({
         ...articleObject,

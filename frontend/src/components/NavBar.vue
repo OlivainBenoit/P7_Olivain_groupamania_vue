@@ -67,17 +67,19 @@ nav {
     flex-direction: column;
     height: 80px;
     width: 100%;
-    padding: 10px 20px;
+    padding: 0px 20px;
+    justify-content: center;
   }
   #logoHeader {
     height: 40px;
-    width: auto;
+    width: 233px;
     position: absolute;
     left: 50%;
     margin-left: -115px;
     top: 2%;
     @include mobile {
       height: 30px;
+      width: 175px;
       position: static;
       margin-left: 0px;
     }
