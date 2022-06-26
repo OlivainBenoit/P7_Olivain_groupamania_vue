@@ -143,8 +143,9 @@ export default {
 }
 
 .card-img-top {
-  max-height: 550px;
+  height: 500px;
   width: auto;
+  object-fit: cover;
 }
 
 .card-footer {
